@@ -3,15 +3,16 @@ import { Form, Field } from 'react-final-form'
 import AutoSave from './AutoSave'
 
 export default function FTDSheet(props) {
+	const save = props.save || (()=>({}))
 	return (
 		<Form
-			onSubmit={props.save /* NOT USED, but required */}
+			onSubmit={save /* NOT USED, but required */}
 			initialValues={props.sheet}
 			subscription={{}}
 		>
 			{() => (
 				<div className="form">
-					{!props.readonly && <AutoSave debounce={1000} save={props.save} />}
+					{!props.readonly && <AutoSave debounce={1000} save={save} />}
 					<div>
 						<label>Name</label>
 						<Field

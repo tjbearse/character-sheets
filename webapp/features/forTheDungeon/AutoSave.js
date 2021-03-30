@@ -21,10 +21,12 @@ class AutoSave extends React.Component {
 		if (this.promise) {
 			await this.promise
 		}
-		const { values, save } = this.props
+		const { pristine, values, save } = this.props
+		if (pristine) return;
 
 		// This diff step is totally optional
-		console.log(this.state.values, values)
+		console.log(this.props)
+		// BUG it is possible to retrigger a save on pristine data by navigating to the current page
 		// BUG difference doesn't pick up missing keys, form does not include keys for empty strings
 		// const difference = diff(this.state.values, values)
 		//if (Object.keys(difference).length) {
@@ -56,5 +58,5 @@ class AutoSave extends React.Component {
 // - Render a message when submitting
 // - Pass in debounce and save props nicely
 export default props => (
-	<FormSpy {...props} subscription={{ values: true }} component={AutoSave} />
+	<FormSpy {...props} subscription={{ pristine: true, values: true }} component={AutoSave} />
 )
