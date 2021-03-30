@@ -7,11 +7,11 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 // save difference
 const save = async values => {
 	console.log('Saving', values)
-	await sleep(2000)
+	// await sleep(2000)
 }
 
 const load = async (id) => {
-	await sleep(2000)
+	// await sleep(2000)
 	return id=="123"? {
 		name: "Alpha",
 		description: "d",
@@ -20,7 +20,7 @@ const load = async (id) => {
 		tool: "t",
 		motivation: "m",
 		harm: 1,
-		zeal: 6,
+		zeal: 5,
 		items: "_",
 	} : {
 		name: "Bravo",
@@ -30,7 +30,7 @@ const load = async (id) => {
 		tool: "t",
 		motivation: "m",
 		harm: 1,
-		zeal: 6,
+		zeal: 5,
 		items: "_",
 	}
 }

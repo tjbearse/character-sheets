@@ -5,7 +5,7 @@ import getParams from './urlHashParam'
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const load = async () => {
-	await sleep(2000)
+	// await sleep(2000)
 	return {
 		"123":{
 			name: "Alpha",
@@ -54,6 +54,7 @@ export default class FTDGMContainer extends React.Component {
 						.map((id) =>
 							<FTDSheet
 								key={id}
+								readOnly={true}
 								sheet={this.state.sheets[id]}
 							/>
 						)

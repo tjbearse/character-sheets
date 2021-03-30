@@ -1,0 +1,51 @@
+@import "~bootstrap/scss/bootstrap";
+
+.sheet {
+	label {
+		font-size: 1.25rem;
+	}
+	.form-group-inline.dots label {
+		margin-bottom: 0px;
+		margin-right: 0px;
+		vertical-align: middle;
+	}
+	.dot-box {
+		// @extend .bg-light;
+		@extend .card;
+		@extend .card-body;
+		@extend .rounded;
+		@extend .border;
+		// @extend .text-white;
+		label {
+			@extend .card-title;
+			font-size: 1.25rem;
+			text-align: center;
+		}
+	}
+	.dots {
+
+		[type=checkbox] {
+			display:none;
+
+			& + label{
+				// background:url('images/check-box.png') no-repeat;
+				height: 50px;
+				width: 50px;
+				border: solid 3px;
+				border-color: $gray-300;
+				background-color: $white;
+				border-radius: 50%;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+			}
+
+			&:checked + label{
+				background-color: $gray-600;
+				border-color: $gray-700;
+			}
+		}
+
+
+	}
+}
