@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from '../features/counter/counterSlice'
+import ftdSheetReducer from '../features/forTheDungeon/ftdSheetSlice'
 
 
 export default configureStore({
 	reducer: {
-		counter: counterReducer
+		sheet: ftdSheetReducer,
 	}
 })

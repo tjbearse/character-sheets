@@ -3,7 +3,7 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-	entry: './app/index.js',
+	entry: './webapp/index.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
@@ -58,7 +58,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: __dirname + '/app/index.html',
+			template: __dirname + '/webapp/index.html',
 			filename: 'index.html',
 			inject: 'body'
 		})
