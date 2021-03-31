@@ -1,0 +1,4 @@
+flask
+tinymongo
+Flask-Admin
+pymongo
