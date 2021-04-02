@@ -22,6 +22,11 @@ export const updateGame = createAsyncThunk('games/updateOne', async gamePatch =>
 	return gamePatch
 })
 
+export const createGame = createAsyncThunk('games/addOne', async gamePatch => {
+	const response = await gameAPI.createGame(gamePatch)
+	return Object.assign({}, gamePatch, response)
+})
+
 export const gamesAdapter = createEntityAdapter({
 	selectId: (e) => e._id,
 })
@@ -35,10 +40,8 @@ const slice = createSlice({
 		// should this be set instead of upsert?
 		builder.addCase(fetchGames.fulfilled, gamesAdapter.upsertMany)
 		builder.addCase(fetchGame.fulfilled, gamesAdapter.upsertOne)
-		builder.addCase(updateGame.fulfilled, (state, { payload }) => {
-			const { _id: id, ...changes } = payload
-			usersAdapter.updateOne(state, { id, changes })
-		})
+		builder.addCase(updateGame.fulfilled, gamesAdapter.updateOne)
+		builder.addCase(createGame.fulfilled, gamesAdapter.upsertOne)
 	}
 })
 

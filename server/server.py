@@ -42,6 +42,7 @@ def single_game(gameId):
             { '_id': gameId },
             { '$set': json}
         )
+        return jsonify(success=True)
     else:
         game = db.games.find_one({"_id": gameId})
         if not game:

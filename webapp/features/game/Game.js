@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import {
 	BrowserRouter as Router,
 	Link,
@@ -10,44 +10,42 @@ import {
 	useRouteMatch,
 } from 'react-router-dom'
 
-import {EditGameContainer, NewGameContainer} from './EditGame'
+import {EditGameContainer} from './EditGame'
 import GameListContainer from './GameListContainer'
 import MySheet from './MySheet'
 import GameSheets from './GameSheets'
 
-export default function Games() {
-	const { path, url } = useRouteMatch();
+
+import { selectGameById, updateGame } from './gamesSlice'
+
+export default function GamePage() {
+	let { gameId } = useParams();
+	const game = useSelector(state => selectGameById(state, gameId))
+	const dispatch = useDispatch()
+
+	const dispatchUpdate = (game)=> dispatch(updateGame(game))
+
 	return (
-		<Switch>
-			<Route exact path={path}>
-				<h2>Games</h2>
-				<Link to={`${url}/new`}>New</Link>
-				<GameListContainer />
-			</Route>
-			<Route path={`${path}/new`}>
-				<NewGameContainer />
-			</Route>
-			<Route path={`${path}/g/:gameId`}>
-				<Game />
-			</Route>
-		</Switch>
+		<Game game={game} updateGame={dispatchUpdate} />
 	)
 }
 
-function Game() {
+function Game({ game, updateGame }) {
 	let { path, url } = useRouteMatch();
-	let { gameId } = useParams();
-
-	// TODO get game info if not had
 
 	const isGM = false;
 
+	if (!game) {
+		// TODO are we loading?
+		return 'loading?'
+	}
+
 	return (
 		<div>
-			<h2> Game {gameId} </h2>
+			<h2> Game {game.name} </h2>
 			<ul>
 				<li><Link to={`${url}/all`}>All Sheets</Link></li>
-				<li><Link to={`${url}/sheet`}>My Sheet</Link></li>
+				<li><Link to={`${url}/sheet`}>My Sheet(s)</Link></li>
 				<li><Link to={`${url}/edit`}>Edit Game</Link></li>
 			</ul>
 			<Switch>
@@ -55,21 +53,18 @@ function Game() {
 					{ isGM ? <Redirect to={`${url}/all`} /> : <Redirect to={`${url}/sheet`} />}
 				</Route>
 				<Route path={`${path}/all`}>
-					<GMView gameId={gameId} />
+					{ /* TODO pass down sheets */ }
+					<GameSheets gameId={game._id} />
 				</Route>
 				<Route path={`${path}/sheet`}>
-					<MySheet gameId={gameId} />
+					{ /* TODO pass down sheet */ }
+					<MySheet gameId={game._id} />
 				</Route>
 				<Route path={`${path}/edit`}>
-					<EditGameContainer gameId={gameId} />
+					{ /* TODO pass down game */ }
+					<EditGameContainer game={game} save={updateGame} />
 				</Route>
 			</Switch>
 		</div>
-	)
-}
-
-function GMView({ gameId }) {
-	return (
-		<GameSheets gameId={gameId} />
 	)
 }

@@ -1,34 +1,25 @@
 import React from 'react'
 import { Form, Field } from 'react-final-form'
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-// save difference
-const save = async values => {
-	await sleep(2000)
-	console.log('Saving', values)
-}
-
-export class EditGameContainer extends React.Component {
-	// TODO load form
-	render() {
-		return (
-			<EditGame save={save}/>
-		)
-	}
-}
-export function NewGameContainer() {
-	// TODO save new
+export function EditGameContainer ({ game, save }) {
 	return (
-			<EditGame save={save}/>
+		<EditGame game={game} save={save}/>
 	)
 }
 
-export function EditGame(props) {
+const defaultGame = { name: "", players: [] }
+export function NewGameContainer({ createGame }) {
+	// TODO save new
+	return (
+			<EditGame game={defaultGame} save={createGame}/>
+	)
+}
+
+export function EditGame({ game, save, readOnly }) {
 	return (
 		<Form
-			onSubmit={props.save}
-			initialValues={props.game}
+			onSubmit={save}
+			initialValues={game}
 			subscription={{}}
 			render = {({handleSubmit, submitting, pristine}) => (
 				<form onSubmit={handleSubmit}>
@@ -39,7 +30,7 @@ export function EditGame(props) {
 							component="input"
 							type="text"
 							placeholder="New Game"
-							disabled={props.readonly}
+							disabled={readOnly}
 						/>
 						{ /* todo add players */ }
 					</div>

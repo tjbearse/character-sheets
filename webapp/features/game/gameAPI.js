@@ -20,13 +20,15 @@ export default {
 		}
 		return ajax(`${basePath}/games/${gamePatch._id}`, {
 			method: 'PUT',
-			data: gamePatch
+			data: JSON.stringify( gamePatch),
+			contentType: 'application/json'
 		})
 	},
 	createGame(game) {
 		return ajax(`${basePath}/games`, {
 			method: 'POST',
-			data: game
+			data: JSON.stringify(game),
+			contentType: 'application/json'
 		})
 	},
 }

@@ -7,7 +7,7 @@ import {
 	useParams,
 	useRouteMatch,
 } from 'react-router-dom';
-import Games from './features/game/Game'
+import Games from './features/game/Games'
 
 export default function App() {
 	return (

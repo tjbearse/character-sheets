@@ -30,6 +30,10 @@ export default function MySheet({ gameId }) {
 			save={saveSheet}
 		/>)
 	} else {
+		// FIXME separate loading from none
+		// idea: add to game or make gameId -> sheet map
+		// no key / undefined => not fetched
+		// [] => no sheets
 		return 'loading or none...'
 	}
 }
