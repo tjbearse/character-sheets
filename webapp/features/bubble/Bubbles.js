@@ -8,11 +8,9 @@ export default function Bubbles(props) {
 
 	const onChange = (i) => {
 		if (props.readOnly) return;
-		console.log(props)
 		props.input.value != i ? props.input.onChange(i) : props.input.onChange(i-1)
 	}
 
-	console.log(props)
 	return <div className="dots row justify-content-between">
 		<input type="hidden" name={props.input.name} className="dot" value={props.input.value} />
 		{

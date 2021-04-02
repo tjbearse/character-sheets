@@ -3,6 +3,21 @@ from wtforms import fields, form
 from flask_admin.model.fields import InlineFieldList, InlineFormField
 from flask_admin.form import Select2Widget
 
+class GameForm(form.Form):
+    name = fields.StringField('Name')
+    players = InlineFieldList(fields.StringField('PlayerId'))
+
+
+class GameView(ModelView):
+    column_list = ('_id', 'name', 'players')
+    column_sortable_list = ('name')
+
+    form = GameForm
+
+    page_size = 20
+    can_set_page_size = True
+
+
 class FTDSheet(form.Form):
     #TODO set defaults
     name = fields.StringField('Name')
@@ -15,21 +30,14 @@ class FTDSheet(form.Form):
     zeal = fields.IntegerField('Zeal', default=5)
     items = fields.StringField('Items')
 
-class PlayerRefForm(form.Form):
-    # TODO example in tinymongo example of making this a selector
-    player = fields.StringField('PlayerId')
-    sheet = InlineFormField(FTDSheet)
+    gameId = fields.StringField('Game')
+    playerId = fields.StringField('Player')
 
-class GameForm(form.Form):
-    name = fields.StringField('Name')
-    players = InlineFieldList(InlineFormField(PlayerRefForm))
-
-
-class GameView(ModelView):
-    column_list = ('_id', 'name', 'players')
+class SheetView(ModelView):
+    column_list = ('_id', 'name', 'playerId', 'gameId')
     column_sortable_list = ('name')
 
-    form = GameForm
+    form = FTDSheet
 
     page_size = 20
     can_set_page_size = True

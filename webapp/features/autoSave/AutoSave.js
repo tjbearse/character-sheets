@@ -28,6 +28,7 @@ class AutoSave extends React.Component {
 		console.log(this.props)
 		// BUG it is possible to retrigger a save on pristine data by navigating to the current page
 		// BUG difference doesn't pick up missing keys, form does not include keys for empty strings
+		// make sure to keep _id too, always need that
 		// const difference = diff(this.state.values, values)
 		//if (Object.keys(difference).length) {
 			// values have changed

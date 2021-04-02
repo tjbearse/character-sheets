@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import ftdSheetReducer from '../features/forTheDungeon/ftdSheetSlice'
+import gamesSlice from '../features/game/gamesSlice'
+import sheetsSlice from '../features/sheet/sheetsSlice'
 
 
 export default configureStore({
 	reducer: {
-		sheet: ftdSheetReducer,
+		games: gamesSlice,
+		sheets: sheetsSlice,
 	}
 })

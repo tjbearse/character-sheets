@@ -1,21 +1,21 @@
 import React from 'react'
 import { Form, Field } from 'react-final-form'
-import AutoSave from './AutoSave'
+import AutoSave from '../autoSave/AutoSave'
 import Bubbles from '../bubble/Bubbles'
 import style from './style.css'
 
-export default function FTDSheet(props) {
-	const save = props.save || (()=>({}))
+export default function FTDSheet({ sheet, save, readOnly }) {
+	save = save || (()=>({}))
 	const formClassName = "form-control"
 	return (
 		<Form
 			onSubmit={save /* NOT USED, but required */}
-			initialValues={props.sheet}
+			initialValues={sheet}
 			subscription={{}}
 		>
 			{() => (
 				<form className="container sheet">
-					{!props.readOnly && <AutoSave debounce={1000} save={save} />}
+					{!readOnly && <AutoSave debounce={1000} save={save} />}
 					<div className="row">
 						<div className="col">
 							<div className="form-group">
@@ -25,7 +25,7 @@ export default function FTDSheet(props) {
 									component="input"
 									type="text"
 									placeholder="Character Name"
-									readOnly={props.readOnly}
+									readOnly={readOnly}
 									className={formClassName}
 								/>
 							</div>
@@ -36,7 +36,7 @@ export default function FTDSheet(props) {
 									component="textarea"
 									rows="2"
 									placeholder="Character Description"
-									readOnly={props.readOnly}
+									readOnly={readOnly}
 									className={formClassName}
 								/>
 							</div>
@@ -47,7 +47,7 @@ export default function FTDSheet(props) {
 									component="input"
 									type="text"
 									placeholder="Character Perk"
-									readOnly={props.readOnly}
+									readOnly={readOnly}
 									className={formClassName}
 								/>
 							</div>
@@ -60,7 +60,7 @@ export default function FTDSheet(props) {
 									component="input"
 									type="text"
 									placeholder="Talent"
-									readOnly={props.readOnly}
+									readOnly={readOnly}
 									className={formClassName}
 								/>
 							</div>
@@ -71,7 +71,7 @@ export default function FTDSheet(props) {
 									component="input"
 									type="text"
 									placeholder="Tool"
-									readOnly={props.readOnly}
+									readOnly={readOnly}
 									className={formClassName}
 								/>
 							</div>
@@ -82,7 +82,7 @@ export default function FTDSheet(props) {
 									component="input"
 									type="text"
 									placeholder="Motivation"
-									readOnly={props.readOnly}
+									readOnly={readOnly}
 									className={formClassName}
 								/>
 							</div>
@@ -98,7 +98,7 @@ export default function FTDSheet(props) {
 									type="number"
 									className={`${formClassName}`}
 									render={ ({input,}) => (
-										<Bubbles label="Harm" max={6} readOnly={props.readOnly} input={input}/>
+										<Bubbles label="Harm" max={6} readOnly={readOnly} input={input}/>
 									)}
 								/>
 							</div>
@@ -112,7 +112,7 @@ export default function FTDSheet(props) {
 									placeholder="Zeal"
 									className={`${formClassName}`}
 									render={ ({input,}) => (
-										<Bubbles label="Zeal" max={5} readOnly={props.readOnly} input={input}/>
+										<Bubbles label="Zeal" max={5} readOnly={readOnly} input={input}/>
 									)}
 								/>
 							</div>
@@ -126,7 +126,7 @@ export default function FTDSheet(props) {
 								component="textarea"
 								placeholder="Items"
 								rows="4"
-								readOnly={props.readOnly}
+								readOnly={readOnly}
 								className={formClassName}
 							/>
 						</div>
@@ -137,7 +137,7 @@ export default function FTDSheet(props) {
 								component="textarea"
 								placeholder="Experiences"
 								rows="4"
-								readOnly={props.readOnly}
+								readOnly={readOnly}
 								className={formClassName}
 							/>
 						</div>

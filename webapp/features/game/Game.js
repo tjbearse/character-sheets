@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { useSelector } from 'react-redux'
 import {
 	BrowserRouter as Router,
 	Link,
@@ -7,23 +8,21 @@ import {
 	Switch,
 	useParams,
 	useRouteMatch,
-} from 'react-router-dom';
+} from 'react-router-dom'
 
-import FTDRequestContainer from '../forTheDungeon/FTDRequestContainer'
-import FTDGMContainer from '../forTheDungeon/FTDGMContainer'
 import {EditGameContainer, NewGameContainer} from './EditGame'
+import GameListContainer from './GameListContainer'
+import MySheet from './MySheet'
+import GameSheets from './GameSheets'
 
 export default function Games() {
-	let { path, url } = useRouteMatch();
+	const { path, url } = useRouteMatch();
 	return (
 		<Switch>
 			<Route exact path={path}>
 				<h2>Games</h2>
-				<ul>
-					<li><Link to={`${url}/new`}>New</Link></li>
-					<li><Link to={`${url}/g/G1`}>G1</Link></li>
-					<li><Link to={`${url}/g/G2`}>G2</Link></li>
-				</ul>
+				<Link to={`${url}/new`}>New</Link>
+				<GameListContainer />
 			</Route>
 			<Route path={`${path}/new`}>
 				<NewGameContainer />
@@ -38,6 +37,8 @@ export default function Games() {
 function Game() {
 	let { path, url } = useRouteMatch();
 	let { gameId } = useParams();
+
+	// TODO get game info if not had
 
 	const isGM = false;
 
@@ -54,28 +55,21 @@ function Game() {
 					{ isGM ? <Redirect to={`${url}/all`} /> : <Redirect to={`${url}/sheet`} />}
 				</Route>
 				<Route path={`${path}/all`}>
-					<GMView />
+					<GMView gameId={gameId} />
 				</Route>
 				<Route path={`${path}/sheet`}>
-					<Sheet />
+					<MySheet gameId={gameId} />
 				</Route>
 				<Route path={`${path}/edit`}>
-					<EditGameContainer />
+					<EditGameContainer gameId={gameId} />
 				</Route>
 			</Switch>
 		</div>
 	)
 }
 
-function Sheet() {
-	// TODO pass down gameID
+function GMView({ gameId }) {
 	return (
-		<FTDRequestContainer/>
-	)
-}
-
-function GMView() {
-	return (
-		<FTDGMContainer />
+		<GameSheets gameId={gameId} />
 	)
 }
