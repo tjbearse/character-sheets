@@ -1,6 +1,7 @@
 // from https://final-form.org/docs/react-final-form/examples
 import React from 'react'
 import { FormSpy } from 'react-final-form'
+import { Prompt } from 'react-router'
 import diff from 'object-diff'
 
 class AutoSave extends React.Component {
@@ -13,12 +14,15 @@ class AutoSave extends React.Component {
 		if (this.timeout) {
 			clearTimeout(this.timeout)
 		}
-		console.log("set save timeout");
-		this.timeout = setTimeout(this.save, this.props.debounce)
+		const { pristine, values, save } = this.props
+		if (!pristine) {
+			console.log("set save timeout");
+			this.timeout = setTimeout(this.save, this.props.debounce)
+		}
 	}
 
 	componentWillUnmount() {
-		// FIXME we shouldn't unmount while this is pending
+		// FIXME we shouldn't unmount while this is pending TODO add nav prevent while saving
 		if (this.timeout) {
 			clearTimeout(this.timeout)
 		}
@@ -51,10 +55,16 @@ class AutoSave extends React.Component {
 	}
 
 	render() {
-		// This component doesn't have to render anything, but it can render
-		// submitting state.
 		return (
-			this.state.submitting && <div className="submitting">Submitting...</div>
+			<div>
+				<Prompt
+				when={this.state.submitting}
+				message={location =>
+					`Your changes are still saving. Are you sure you want to go to ${location.pathname}`
+				}
+				/>
+				{ this.state.submitting && <div className="submitting">Submitting...</div> }
+			</div>
 		)
 	}
 }
