@@ -33,7 +33,8 @@ export default {
 	createSheet(sheet) {
 		return ajax(`${basePath}/sheets`, {
 			method: 'POST',
-			data: sheet
+			data: JSON.stringify(sheet),
+			contentType: 'application/json'
 		})
 	},
 }

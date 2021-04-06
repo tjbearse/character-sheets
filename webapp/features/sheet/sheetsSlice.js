@@ -26,6 +26,11 @@ export const updateSheet = createAsyncThunk('sheets/updateOne', async sheetPatch
 	return sheetPatch
 })
 
+export const createSheet = createAsyncThunk('sheets/upsertOne', async sheetPatch => {
+	const response = await sheetAPI.createSheet(sheetPatch)
+	return Object.assign({}, sheetPatch, response)
+})
+
 export const sheetsAdapter = createEntityAdapter({
 	selectId: (e) => e._id,
 })
@@ -43,6 +48,7 @@ const slice = createSlice({
 			const { _id: id, ...changes } = payload
 			sheetsAdapter.updateOne(state, { id, changes })
 		})
+		builder.addCase(createSheet.fulfilled, sheetsAdapter.upsertOne)
 	}
 })
 

@@ -4,6 +4,7 @@ import AutoSave from '../autoSave/AutoSave'
 import Bubbles from '../bubble/Bubbles'
 import style from './style.css'
 
+// TODO separate submit save and autosave
 export default function FTDSheet({ sheet, save, readOnly }) {
 	save = save || (()=>({}))
 	const formClassName = "form-control"
