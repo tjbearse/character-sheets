@@ -7,6 +7,12 @@ import database
 from admin import GameView, SheetView
 
 app = Flask(__name__)
+
+# FIXME debug latency
+import time
+app.before_request(lambda : time.sleep(5))
+
+
 # FIXME testing only
 app.config['SECRET_KEY'] = '123456790'
 

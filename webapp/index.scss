@@ -49,3 +49,17 @@
 
 	}
 }
+
+.spinner-ellipsis {
+	@extend .spinner-grow;
+	@extend .spinner-grow-sm;
+	@extend .mr-1;
+
+	color: $gray-400;
+}
+@for $i from 1 through 3 {
+	.spinner-ellipsis-#{$i} {
+		@extend .spinner-ellipsis;
+		animation-delay: calc(#{$i} * .1s);
+	}
+}

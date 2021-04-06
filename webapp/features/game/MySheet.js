@@ -1,4 +1,8 @@
-import React, { useMemo, useEffect } from 'react'
+import React, {
+	useEffect,
+	useMemo,
+	useState,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	BrowserRouter as Router,
@@ -21,8 +25,11 @@ const makeSheetsForGame = (gameId) =>
 
 export default function MySheetsContainer({ gameId }) {
 	const dispatch = useDispatch()
-	useEffect(() => {
-		dispatch(fetchSheetsForGame(gameId));
+	const [loading, setLoading] = useState(false)
+	useEffect(async () => {
+		setLoading(true)
+		await dispatch(fetchSheetsForGame(gameId));
+		setLoading(false)
 	}, []);
 
 	const sheetSelector = useMemo(() => makeSheetsForGame(gameId), [gameId])
@@ -33,11 +40,11 @@ export default function MySheetsContainer({ gameId }) {
 	// [] => no sheets
 
 	return (
-		<MySheets sheets={sheets} gameId={gameId} />
+		<MySheets loading={loading} sheets={sheets} gameId={gameId} />
 	)
 }
 
-function MySheets({ sheets, gameId }) {
+function MySheets({ sheets, gameId, loading }) {
 	const dispatch = useDispatch()
 	const history = useHistory();
 	const { path, url } = useRouteMatch()
@@ -46,6 +53,7 @@ function MySheets({ sheets, gameId }) {
 	const newSheet = (sheet) => {
 		sheet = Object.assign({}, sheet, { gameId })
 		return dispatch(createSheet(sheet))
+			// FIXME form prompt prevents load, do 1 render to redirect
 			.then(({ payload: s }) =>
 				history.push(`${url}/s/${s._id}`)
 			)
@@ -58,6 +66,13 @@ function MySheets({ sheets, gameId }) {
 				<Link to={`${url}/new`}>New</Link>
 				<ul>
 					{
+						loading?
+						<li>
+							<span className="spinner-ellipsis-1"></span>
+							<span className="spinner-ellipsis-2"></span>
+							<span className="spinner-ellipsis-3"></span>
+						</li>
+						:
 						sheets.map(s =>
 							<li key={s._id}>
 								<Link to={`${url}/s/${s._id}`}>{s.name} </Link>

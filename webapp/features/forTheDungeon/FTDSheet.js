@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Field } from 'react-final-form'
-import AutoSave from '../autoSave/AutoSave'
+import { Prompt } from 'react-router'
+// import AutoSave from '../autoSave/AutoSave'
 import Bubbles from '../bubble/Bubbles'
 import style from './style.css'
 
@@ -10,13 +11,24 @@ export default function FTDSheet({ sheet, save, readOnly }) {
 	const formClassName = "form-control"
 	return (
 		<Form
-			onSubmit={save /* NOT USED, but required */}
+			onSubmit={save}
 			initialValues={sheet}
-			subscription={{}}
+			subscription={{submitting: true, pristine: true}}
 		>
-			{() => (
-				<form className="container sheet">
-					{!readOnly && <AutoSave debounce={1000} save={save} />}
+			{({ handleSubmit, pristine, submitting }) => (
+				<form onSubmit={handleSubmit} className="container sheet">
+					<Prompt
+						when={!pristine}
+						message={location =>
+							`You haven't saved your changes yet. Continue?`
+						}
+					/>
+					<div className="form-group clearfix">
+						<button className="btn btn-primary float-right" disabled={pristine || submitting} type="submit">
+							{ submitting && (<span className="spinner-grow spinner-grow-sm mr-1"></span>) }
+							Save
+						</button>
+					</div>
 					<div className="row">
 						<div className="col">
 							<div className="form-group">
