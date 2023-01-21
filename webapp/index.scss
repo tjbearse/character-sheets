@@ -50,6 +50,15 @@
 	}
 }
 
+.gmSheet {
+	width: 800px;
+	@extend .card;
+	@extend .card-body;
+	@extend .bg-light;
+	@extend .mx-1;
+	@extend .my-3;
+}
+
 .spinner-ellipsis {
 	@extend .spinner-grow;
 	@extend .spinner-grow-sm;

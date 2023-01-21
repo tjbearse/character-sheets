@@ -21,6 +21,7 @@ import { selectGameById, updateGame } from './gamesSlice'
 export default function GamePage() {
 	let { gameId } = useParams();
 	const game = useSelector(state => selectGameById(state, gameId))
+	// TODO determine loading state and pass to game
 	const dispatch = useDispatch()
 
 	const dispatchUpdate = (game)=> dispatch(updateGame(game))

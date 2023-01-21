@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 # FIXME debug latency
 import time
-app.before_request(lambda : time.sleep(5))
+# app.before_request(lambda : time.sleep(5))
 
 
 # FIXME testing only

@@ -1,14 +1,13 @@
 import React from 'react'
 import { Form, Field } from 'react-final-form'
 import { Prompt } from 'react-router'
-// import AutoSave from '../autoSave/AutoSave'
 import Bubbles from '../bubble/Bubbles'
 import style from './style.css'
 
-// TODO separate submit save and autosave
 export default function FTDSheet({ sheet, save, readOnly }) {
 	save = save || (()=>({}))
 	const formClassName = "form-control"
+	// TODO pull more bstrap classes into styles so they are easier to change
 	return (
 		<Form
 			onSubmit={save}
@@ -17,18 +16,22 @@ export default function FTDSheet({ sheet, save, readOnly }) {
 		>
 			{({ handleSubmit, pristine, submitting }) => (
 				<form onSubmit={handleSubmit} className="container sheet">
+					{ /* TODO fix diffing / debouncing and reenable autosave */ }
 					<Prompt
-						when={!pristine}
+						when={!readOnly && !pristine}
 						message={location =>
 							`You haven't saved your changes yet. Continue?`
 						}
 					/>
-					<div className="form-group clearfix">
-						<button className="btn btn-primary float-right" disabled={pristine || submitting} type="submit">
-							{ submitting && (<span className="spinner-grow spinner-grow-sm mr-1"></span>) }
-							Save
-						</button>
-					</div>
+					{
+						!readOnly &&
+						<div className="form-group clearfix">
+							<button className="btn btn-primary float-right" disabled={pristine || submitting} type="submit">
+								{ submitting && (<span className="spinner-grow spinner-grow-sm mr-1"></span>) }
+								Save
+							</button>
+						</div>
+					}
 					<div className="row">
 						<div className="col">
 							<div className="form-group">

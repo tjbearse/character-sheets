@@ -11,7 +11,7 @@ import Games from './features/game/Games'
 
 export default function App() {
 	return (
-		<Router>
+		<Router >
 			<div>
 				<nav>
 					<ul>

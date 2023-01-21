@@ -34,10 +34,6 @@ export default function MySheetsContainer({ gameId }) {
 
 	const sheetSelector = useMemo(() => makeSheetsForGame(gameId), [gameId])
 	const sheets = useSelector(sheetSelector)
-	// FIXME separate loading from none
-	// idea: add to game or make gameId -> sheet map
-	// no key / undefined => not fetched
-	// [] => no sheets
 
 	return (
 		<MySheets loading={loading} sheets={sheets} gameId={gameId} />
